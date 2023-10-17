@@ -19,7 +19,7 @@ if len(sys.argv) > 1:
 
 if not help_flag:
   # default argument values
-  phrase_to_remove = "test"
+  phrase_to_remove = "www"
   replace_with = ""
   file_type = "mp4"
 
@@ -65,6 +65,8 @@ if not help_flag:
       if val < len(cut):
         out += replace_with
 
+    out = out.strip()
+
     out += "." + file_type
 
     return out
@@ -77,6 +79,7 @@ if not help_flag:
     renamed_file = renamed_file.strip()
     # removes file path from renamed_file
     renamed_file = os.path.basename(renamed_file)
+
     # checks if phrase_to_remove is found in file name 
     if phrase_to_remove in renamed_file:
       # removes phrase

@@ -12,6 +12,6 @@ Program comes with 3 command line arguments:
   File Type: String
 
 ### Examples:
-`python rename.py help`
-`python rename.py`
-`python rename.py 123 567 txt`
+`python rename.py help`  
+`python rename.py`  
+`python rename.py 123 567 txt`  
