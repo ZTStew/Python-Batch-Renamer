@@ -73,7 +73,7 @@ if not help_flag:
 
   # Itterates through all file_type files found in given directory
   for input_file in input_files:
-    # Program is unable to handle non-unicode symbols potentially crashing the program
+    # Gitbash is unable to handle non-unicode symbols potentially crashing the program
     try:
       # removes file extension from input_file name
       renamed_file = input_file.split("." + file_type)[0]
