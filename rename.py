@@ -19,9 +19,10 @@ if len(sys.argv) > 1:
 
 if not help_flag:
   # default argument values
-  phrase_to_remove = "www"
+  phrase_to_remove = "test"
   replace_with = ""
   file_type = "mp4"
+  errors = []
 
   # phrase
   if len(sys.argv) > 1:
@@ -38,15 +39,14 @@ if not help_flag:
   if len(sys.argv) > 3:
     file_type = sys.argv[3].strip(".")
 
-  print("phrase: " + phrase_to_remove)
-  print("replace: " + replace_with)
-  print("file: " + file_type)
+  print("Search Phrase: " + phrase_to_remove)
+  print("Prase Replace: " + replace_with)
+  print("File Type: " + file_type)
 
 
   # gets all files in directory
   directory = "./"
   input_files = glob.glob(f"{directory}/*." + file_type)
-  # print(input_files)
 
   # function removes "phrase_to_remove" from "phrase" and replaces it with "replace_with" and re-adds "file_type"
   def remove_phrase(phrase, phrase_to_remove, replace_with, file_type):
@@ -73,19 +73,25 @@ if not help_flag:
 
   # Itterates through all file_type files found in given directory
   for input_file in input_files:
-    # removes file extension from input_file name
-    renamed_file = input_file.split("." + file_type)[0]
-    # removes any trailing whitespaces
-    renamed_file = renamed_file.strip()
-    # removes file path from renamed_file
-    renamed_file = os.path.basename(renamed_file)
+    # Program is unable to handle non-unicode symbols potentially crashing the program
+    try:
+      # removes file extension from input_file name
+      renamed_file = input_file.split("." + file_type)[0]
+      # removes any trailing whitespaces
+      renamed_file = renamed_file.strip()
+      # removes file path from renamed_file
+      renamed_file = os.path.basename(renamed_file)
 
-    # checks if phrase_to_remove is found in file name 
-    if phrase_to_remove in renamed_file:
-      # removes phrase
-      update_file = remove_phrase(renamed_file, phrase_to_remove, replace_with, file_type)
-      # updates existing file with new name
-      os.rename(input_file, update_file)
-      print("Task completed: " + input_file + " -> " + update_file)
-    # else:
-    #   print("skip")
+      # checks if phrase_to_remove is found in file name 
+      if phrase_to_remove in renamed_file:
+        # removes phrase
+        update_file = remove_phrase(renamed_file, phrase_to_remove, replace_with, file_type)
+        # updates existing file with new name
+        os.rename(input_file, update_file)
+        print("Task completed: " + input_file + " -> " + update_file)
+
+    except:
+      errors.append(input_file)
+
+  if len(errors) > 0:
+    print("ERRORS Detected: " + str(len(errors)))
